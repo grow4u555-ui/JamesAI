@@ -1,0 +1,31 @@
+model_list:
+  # ১. প্রাইমারি ও দ্রুততম এপিআই (Groq)
+  - model_name: jarvis-core
+    litellm_params:
+      model: groq/llama-3.3-70b-versatile
+      api_key: os.environ/GROQ_API_KEY
+      rpm: 30
+
+  # ২. প্রথম ফলব্যাক (Gemini)
+  - model_name: jarvis-core
+    litellm_params:
+      model: gemini/gemini-1.5-flash
+      api_key: os.environ/GEMINI_API_KEY
+
+  # ৩. দ্বিতীয় ফলব্যাক (Mistral)
+  - model_name: jarvis-core
+    litellm_params:
+      model: mistral/mistral-small-latest
+      api_key: os.environ/MISTRAL_API_KEY
+
+  # ৪. অফলাইন ফলব্যাক (Local Ollama)
+  - model_name: jarvis-core
+    litellm_params:
+      model: ollama/qwen2.5-coder
+      api_base: "http://host.docker.internal:11434"
+
+router_settings:
+  fallbacks: [{"jarvis-core": ["jarvis-core"]}]
+  num_retries: 3
+  allowed_fails: 2
+  cooldown_time: 60
