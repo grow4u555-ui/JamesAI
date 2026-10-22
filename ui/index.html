@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JARVIS OS - Cyber Security HUD</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="hud-container">
+        <!-- Left Panel: Telemetry Dashboard -->
+        <aside class="panel left-panel glass">
+            <h2>SYSTEM TELEMETRY</h2>
+            <div class="metric">
+                <label>CPU USAGE <span id="cpu-val">24%</span></label>
+                <div class="progress-bar"><div class="fill" id="cpu-bar" style="width: 24%;"></div></div>
+            </div>
+            <div class="metric">
+                <label>RAM (16GB) <span id="ram-val">42%</span></label>
+                <div class="progress-bar"><div class="fill" id="ram-bar" style="width: 42%;"></div></div>
+            </div>
+            <div class="metric">
+                <label>GPU (4GB VRAM) <span id="gpu-val">18%</span></label>
+                <div class="progress-bar"><div class="fill" id="gpu-bar" style="width: 18%;"></div></div>
+            </div>
+            <div class="metric-status">
+                <p>ACTIVE ROUTER: <span class="highlight">Groq Llama 3.3 70B</span></p>
+                <p>OFFLINE ENGINE: <span class="highlight-alt">Ollama Ready</span></p>
+            </div>
+        </aside>
+
+        <!-- Center: Interactive Arc Reactor Core -->
+        <main class="center-core">
+            <div class="arc-reactor" id="reactor">
+                <div class="outer-ring"></div>
+                <div class="middle-ring"></div>
+                <div class="inner-core"></div>
+                <div class="glowing-center"></div>
+            </div>
+            <div class="status-label" id="status-text">JARVIS SYSTEM ONLINE</div>
+        </main>
+
+        <!-- Right Panel: Multi-Agent Sandbox Terminal -->
+        <aside class="panel right-panel glass">
+            <h2>MULTI-AGENT TERMINAL</h2>
+            <div class="agent-badge-group">
+                <span class="badge active">Recon</span>
+                <span class="badge active">VulnScan</span>
+                <span class="badge active">Exploit</span>
+                <span class="badge active">PDFGen</span>
+            </div>
+            <div class="terminal-box" id="terminal">
+                <p class="term-line">[SYSTEM] JARVIS Sandbox v2.4 initialized...</p>
+                <p class="term-line">[MULTI-AGENT] CrewAI orchestrator listening on port 4000...</p>
+            </div>
+        </aside>
+
+        <!-- Bottom: Control Console & Voice Input -->
+        <footer class="console-footer glass">
+            <button class="voice-btn" id="voice-trigger">🎙️</button>
+            <input type="text" id="user-input" placeholder="Ask JARVIS or give pentest command..." autocomplete="off">
+            <button class="send-btn" id="send-btn">EXECUTE</button>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
