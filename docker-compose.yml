@@ -1,48 +1,7 @@
 version: '3.8'
 
 services:
-  # ১. এপিআই রউটার এবং অটো-ফেলওভার গেটওয়ে
-  litellm:
-    image: ghcr.io/berriai/litellm:main-v1.0.0
-    container_name: jarvis_litellm
-    ports:
-      - "4000:4000"
-    volumes:
-      - ./litellm_config.yaml:/app/config.yaml
-    env_file:
-      - .env
-    command: ["--config", "/app/config.yaml", "--port", "4000"]
-    restart: always
-
-  # ২. ফিউচারিস্টিক ফ্রন্টএন্ড UI (LibreChat / Custom HUD)
-  librechat:
-    image: ghcr.io/danny-avila/librechat:latest
-    container_name: jarvis_ui
-    ports:
-      - "3080:3080"
-    environment:
-      - OPENAI_REVERSE_PROXY=http://litellm:4000/v1
-    depends_on:
-      - litellm
-    restart: always
-
-  # ৩. লোকাল অফলাইন এআই ইঞ্জিন (Ollama)
-  ollama:
-    image: ollama/ollama:latest
-    container_name: jarvis_ollama
-    ports:
-      - "11434:11434"
-    volumes:
-      - ollama_data:/root/.ollama
-    restart: always
-
-volumes:
-  ollama_data:
-
-version: '3.8'
-
-services:
-  # ১. কাস্টম Arc Reactor HUD UI
+  # 1. Arc Reactor HUD UI
   jarvis_ui:
     build: ./ui
     container_name: jarvis_ui
@@ -50,7 +9,7 @@ services:
       - "8080:80"
     restart: always
 
-  # ২. এপিআই রউটার ও অটো-ফেলওভার গেটওয়ে
+  # 2. LiteLLM Proxy Gateway
   litellm:
     image: ghcr.io/berriai/litellm:main-v1.0.0
     container_name: jarvis_litellm
@@ -63,7 +22,7 @@ services:
     command: ["--config", "/app/config.yaml", "--port", "4000"]
     restart: always
 
-  # ৩. মাল্টি-এজেন্ট স্যান্ডবক্স ব্যাকএন্ড
+  # 3. Multi-Agent Sandbox Engine
   sandbox:
     build: ./sandbox
     container_name: jarvis_sandbox
@@ -73,7 +32,7 @@ services:
       - litellm
     restart: always
 
-  # ৪. লোকাল অফলাইন এআই ইঞ্জিন
+  # 4. Local Offline Model Engine (Ollama)
   ollama:
     image: ollama/ollama:latest
     container_name: jarvis_ollama
