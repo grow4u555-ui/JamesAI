@@ -38,3 +38,50 @@ services:
 
 volumes:
   ollama_data:
+
+version: '3.8'
+
+services:
+  # ১. কাস্টম Arc Reactor HUD UI
+  jarvis_ui:
+    build: ./ui
+    container_name: jarvis_ui
+    ports:
+      - "8080:80"
+    restart: always
+
+  # ২. এপিআই রউটার ও অটো-ফেলওভার গেটওয়ে
+  litellm:
+    image: ghcr.io/berriai/litellm:main-v1.0.0
+    container_name: jarvis_litellm
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./litellm_config.yaml:/app/config.yaml
+    env_file:
+      - .env
+    command: ["--config", "/app/config.yaml", "--port", "4000"]
+    restart: always
+
+  # ৩. মাল্টি-এজেন্ট স্যান্ডবক্স ব্যাকএন্ড
+  sandbox:
+    build: ./sandbox
+    container_name: jarvis_sandbox
+    environment:
+      - LITELLM_URL=http://litellm:4000/v1
+    depends_on:
+      - litellm
+    restart: always
+
+  # ৪. লোকাল অফলাইন এআই ইঞ্জিন
+  ollama:
+    image: ollama/ollama:latest
+    container_name: jarvis_ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: always
+
+volumes:
+  ollama_data:
