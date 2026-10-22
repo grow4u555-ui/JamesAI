@@ -1,0 +1,202 @@
+:root {
+    --cyan: #00f3ff;
+    --blue-glow: #0066ff;
+    --dark-bg: #030a16;
+    --panel-bg: rgba(6, 20, 41, 0.55);
+    --border-glow: rgba(0, 243, 255, 0.3);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+body {
+    background-color: var(--dark-bg);
+    background-image: radial-gradient(circle at center, #0a2246 0%, #030a16 80%);
+    color: #fff;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.hud-container {
+    display: grid;
+    grid-template-columns: 280px 1fr 340px;
+    grid-template-rows: 1fr 80px;
+    height: 100vh;
+    padding: 20px;
+    gap: 20px;
+}
+
+.glass {
+    background: var(--panel-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-glow);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px 0 rgba(0, 243, 255, 0.1);
+}
+
+.panel {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    color: var(--cyan);
+    letter-spacing: 2px;
+    border-bottom: 1px solid var(--border-glow);
+    padding-bottom: 8px;
+}
+
+/* Metric Bars */
+.metric label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--blue-glow), var(--cyan));
+    box-shadow: 0 0 10px var(--cyan);
+    transition: width 0.5s ease;
+}
+
+/* Arc Reactor Animation */
+.center-core {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.arc-reactor {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.outer-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 3px dashed var(--cyan);
+    border-radius: 50%;
+    animation: rotate 12s linear infinite;
+    box-shadow: 0 0 20px var(--cyan);
+}
+
+.middle-ring {
+    position: absolute;
+    width: 75%;
+    height: 75%;
+    border: 2px solid var(--blue-glow);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: rotate-reverse 6s linear infinite;
+}
+
+.inner-core {
+    position: absolute;
+    width: 45%;
+    height: 45%;
+    border: 2px solid var(--cyan);
+    border-radius: 50%;
+    box-shadow: inset 0 0 15px var(--cyan);
+}
+
+.glowing-center {
+    width: 25%;
+    height: 25%;
+    background: var(--cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 35px 15px var(--cyan);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.status-label {
+    margin-top: 25px;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 3px;
+    color: var(--cyan);
+    text-shadow: 0 0 10px var(--cyan);
+}
+
+/* Terminal Box */
+.terminal-box {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(0, 243, 255, 0.2);
+    border-radius: 6px;
+    flex: 1;
+    padding: 10px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    overflow-y: auto;
+    color: #76ffd6;
+}
+
+.term-line { margin-bottom: 6px; }
+
+/* Control Console */
+.console-footer {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    gap: 15px;
+}
+
+input[type="text"] {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--border-glow);
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+}
+
+input[type="text"]:focus {
+    border-color: var(--cyan);
+    box-shadow: 0 0 10px var(--border-glow);
+}
+
+button {
+    background: linear-gradient(135deg, var(--blue-glow), var(--cyan));
+    border: none;
+    color: #000;
+    font-weight: bold;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Orbitron', sans-serif;
+    transition: transform 0.2s ease;
+}
+
+button:hover { transform: scale(1.05); }
+
+/* Animations */
+@keyframes rotate { 100% { transform: rotate(360deg); } }
+@keyframes rotate-reverse { 100% { transform: rotate(-360deg); } }
+@keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.2); opacity: 1; } }
